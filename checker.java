@@ -1,29 +1,33 @@
-public class mainReversi {
+import java.util.ArrayList;
+public class checker {
     public static void main (String[] args) {
-        char[][] board = { {'X', 'O', 'X', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'} };
+        char[][] board = { {'-', '-', '-', '-', '-', '-', '-', 'X'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'} };
         char playerChar = 'X';
-        for (int y = 0; y < 8; y++) {
-            int start = 10; 
-            int end = 10; 
-            for (int x = 0; x < 8; x++) {
-                if (board[y][x] == playerChar && start == 10 && end == 10) {
-                    start = x;
-                    end = x;
-                } else if (board[y][x] == playerChar && x > end) {
-                    end = x;
-                } else if (board[y][x] == playerChar && x < start) {
-                    start = x;
-                }
+        int[][] dataset = {};
+        //dataset.add(0,8);
+        //dataset.add(1,7);
+        //System.out.println(dataset);
+        for (int i = 0; i < 8; i++) {
+            dataset[i][0] = i;
+            dataset[i][1] = 7-i;
+        }
+        int start = 10;
+        int end = 10;
+        for (int i = 0; i < 8; i++) {
+            if (board[dataset[i][0]][dataset[i][1]] == playerChar && start == 10 && end == 10) {
+                start = i;
+                end = i;
+            } else if (board[dataset[i][0]][dataset[i][1]] == playerChar && i > end) {
+                end = i;
+            } else if (board[dataset[i][0]][dataset[i][1]] == playerChar && i < start) {
+                start = i;
             }
-            if (start != end) {
-                for (int z = start + 1; z < end; z++) {
-                    board[y][z] = playerChar;
-                }
+        }
+        if (start != end) {
+            for (int i = start; i < end; i++) {
+                board[dataset[i][0]][dataset[i][1]] = playerChar;
             }
-            start = 0;
-            end = 0;
-            
-        } 
+        }
         printBoard(board);
     }
     static void printBoard(char[][] board) {

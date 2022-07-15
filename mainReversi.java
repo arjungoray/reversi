@@ -1,4 +1,5 @@
 import java.util.Scanner; 
+import java.util.ArrayList;
 public class mainReversi {
     public static void main (String[] args) {
         char[][] board = { {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-', '-', '-', '-'} };
@@ -66,6 +67,8 @@ public class mainReversi {
         tempBoard = board;
         tempBoard = checkHorizontal(playerChar);
         tempBoard = checkVertical(playerChar);
+        tempBoard = checkDiagnolEasy(playerChar);
+        tempBoard = checkDiagnolHard(playerChar);
         return tempBoard;
     }
     static char[][] checkHorizontal(char playerChar) {
@@ -119,10 +122,54 @@ public class mainReversi {
         return board;
     }
     static char[][] checkDiagnolEasy(char playerChar) {
-        for ()
+        char[][] board = tempBoard;
+        int start = 10;
+        int end = 10;
+        for (int x = 0; x < 8; x++) {
+            if (board[x][x] == playerChar && start == 10 && end == 10) {
+                start = x;
+                end = x;
+            } else if (board[x][x] == playerChar && x > end) {
+                end = x;
+            } else if (board[x][x] == playerChar && x < start) {
+                start = x;
+            }
+        }
+        if (start != end) {
+            for (int z = start + 1; z < end; z++) {
+                board[z][z] = playerChar;
+            }
+        }
+        return board;
     }
     static char[][] checkDiagnolHard(char playerChar) {
-
+        char[][] board = tempBoard;
+        int[][] dataset = { {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0} };
+        //dataset.add(0,8);
+        //dataset.add(1,7);
+        //System.out.println(dataset);
+        for (int i = 0; i < 8; i++) {
+            dataset[i][0] = i;
+            dataset[i][1] = 7-i;
+        }
+        int start = 10;
+        int end = 10;
+        for (int i = 0; i < 8; i++) {
+            if (board[dataset[i][0]][dataset[i][1]] == playerChar && start == 10 && end == 10) {
+                start = i;
+                end = i;
+            } else if (board[dataset[i][0]][dataset[i][1]] == playerChar && i > end) {
+                end = i;
+            } else if (board[dataset[i][0]][dataset[i][1]] == playerChar && i < start) {
+                start = i;
+            }
+        }
+        if (start != end) {
+            for (int i = start; i < end; i++) {
+                board[dataset[i][0]][dataset[i][1]] = playerChar;
+            }
+        }
+        return board;
     }
 
 }
